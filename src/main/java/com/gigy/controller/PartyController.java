@@ -16,8 +16,10 @@ import com.gigy.entity.dbo.Party;
 import com.gigy.repository.PartyRepository;
 
 @RestController
-@RequestMapping("/parties")
+@RequestMapping(PartyController.REQUEST_MAPPING)
 public class PartyController {
+
+	public static final String REQUEST_MAPPING = "/parties";
 
 	@Autowired
 	private PartyRepository partyRepo;

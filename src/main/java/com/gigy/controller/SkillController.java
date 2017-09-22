@@ -14,8 +14,10 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/skill")
+@RequestMapping(SkillController.REQUEST_MAPPING)
 public class SkillController {
+
+    public static final String REQUEST_MAPPING = "/skill";
 
     @Autowired
     private SkillService skillService;

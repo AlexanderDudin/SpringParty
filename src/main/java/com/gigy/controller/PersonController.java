@@ -19,8 +19,10 @@ import com.gigy.entity.dbo.Person;
 import com.gigy.repository.PersonRepository;
 
 @RestController
-@RequestMapping("/people")
+@RequestMapping(PersonController.REQUEST_MAPPING)
 public class PersonController {
+
+	public static final String REQUEST_MAPPING = "/people";
 
 	@Autowired
 	private PersonRepository personRepo;

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import springfox.documentation.builders.PathSelectors;
 
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -16,20 +17,22 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-@Order(1)
 public class SwaggerConfig {
 
     @Bean
     public Docket apiDocumentation() {
-        return new Docket(DocumentationType.SWAGGER_2)//.groupName("api")//.apiInfo(apiInfo())
-                .select().paths(PathSelectors.any()).build()
-                .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()));
+        return new Docket(DocumentationType.SWAGGER_2).groupName("api").
+                select().apis(RequestHandlerSelectors.basePackage("com.gigy.controller")).
+                paths(PathSelectors.any()).
+                build().
+                securitySchemes(Collections.singletonList(securitySchema())).
+                securityContexts(Collections.singletonList(securityContext()));
+
     }
 
     public static final String securitySchemaOAuth2 = "oauth2schema";
     public static final String authorizationScopeGlobal = "global";
-    public static final String authorizationScopeGlobalDesc ="accessEverything";
+    public static final String authorizationScopeGlobalDesc = "accessEverything";
 
     private OAuth securitySchema() {
         AuthorizationScope authorizationScope = new AuthorizationScope(authorizationScopeGlobal, authorizationScopeGlobal);
