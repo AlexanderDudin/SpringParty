@@ -1,5 +1,5 @@
 server:
-  context-path: /gigy/
+  context-path: /gpsolutions/
   port: 8000
   error:
     whitelabel:
