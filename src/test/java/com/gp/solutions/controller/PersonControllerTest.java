@@ -2,6 +2,7 @@ package com.gp.solutions.controller;
 
 import com.gp.solutions.entity.dbo.Person;
 import com.gp.solutions.repository.PersonRepository;
+import com.gp.solutions.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,11 @@ public class PersonControllerTest {
 
 	@MockBean
 	private PersonRepository personRepo;
-	
+
+	@MockBean
+	private PersonService personService;
+
+
 	private Person person;
 	
 	@Before
