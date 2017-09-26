@@ -36,7 +36,7 @@ public class SwaggerConfig {
 
     private OAuth securitySchema() {
         AuthorizationScope authorizationScope = new AuthorizationScope(authorizationScopeGlobal, authorizationScopeGlobal);
-        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant("http://localhost:8000/gp/solutions/oauth/token");
+        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant("http://localhost:8000/gpsolutions/oauth/token");
         return new OAuth(securitySchemaOAuth2, Collections.singletonList(authorizationScope), Collections.singletonList(grantType));
     }
 

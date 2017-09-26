@@ -2,6 +2,7 @@ package com.gp.solutions.controller;
 
 import com.gp.solutions.entity.dbo.Skill;
 import com.gp.solutions.service.SkillService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(SkillController.REQUEST_MAPPING)
+@Api(description = "Find skill by level name")
 public class SkillController {
 
     public static final String REQUEST_MAPPING = "/skill";
@@ -24,7 +26,7 @@ public class SkillController {
 
     @RequestMapping(value = "/level/{levelName}", method = RequestMethod.GET)
     public ResponseEntity<Collection<Skill>> getSkillByLevel(@PathVariable String levelName) {
-        List<Skill> skills = skillService.getSkillByLevel(levelName);
+        final List<Skill> skills = skillService.getSkillByLevel(levelName);
         if (!skills.isEmpty()) {
             return new ResponseEntity<>(skills, HttpStatus.OK);
         } else {

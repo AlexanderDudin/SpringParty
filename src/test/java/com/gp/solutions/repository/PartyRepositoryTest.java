@@ -29,19 +29,19 @@ public class PartyRepositoryTest {
 
     @Test
     public void repositorySavesParty() {
-        Party party = new Party();
+        final Party party = new Party();
         party.setId(1);
         party.setLocation("Garden");
-        
-      //  Party result = repository.save(party);
+
+        //  Party result = repository.save(party);
 
         when(repository.findOneByLocation(party.getLocation())).thenReturn(party);
 
-        Assert.assertEquals(repository.findOneByLocation(party.getLocation()).getLocation(),"Garden");
-        Assert.assertEquals(repository.findOneByLocation(party.getLocation()).getId(),1);
+        Assert.assertEquals(repository.findOneByLocation(party.getLocation()).getLocation(), "Garden");
+        Assert.assertEquals(repository.findOneByLocation(party.getLocation()).getId(), 1);
 
 
-     //   assertEquals(result.getLocation(), "Garden");
+        //   assertEquals(result.getLocation(), "Garden");
     }
 
 }

@@ -13,9 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/**
-	 * Constructor disables the default security settings
-	 */
+
 	public WebSecurityConfig() {
 		super(true);
 	}

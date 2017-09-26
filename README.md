@@ -5,6 +5,8 @@ This is an example project that illustrates creating a RESTful API in Spring Boo
 ## Runnning this project
 
 ```
+CREATE SCHEMA IF NOT EXISTS testdb
+
 mvn spring-boot:run
 ```
 
@@ -20,7 +22,6 @@ Getting all people from the API:
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -X GET http://localhost:8000/gpsolutions/people
 ```
+## Swagger
 
-## LICENSE
-
-The code is released under the Apache License 2.0. See LICENSE for details.
+rest methods described on swagger: http://localhost:8000/gpsolutions/swagger-ui.html

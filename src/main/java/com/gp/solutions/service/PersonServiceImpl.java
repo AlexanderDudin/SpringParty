@@ -24,21 +24,8 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     SkillRepository skillRepository;
 
-
-//    @Override
-//    public List<Person> getAllPersonsByPartyAndSkill(String location, String skillName) {
-//        final Party party = partyRepository.findOneByLocation(location);
-//        final Skill skill = skillRepository.findByName(skillName);
-//        final List<Person> personList = personRepository.findByParties(party);
-//        // ? db level
-//        return personList.stream().filter((p) -> p.getSkillByLevel().containsKey(skill)).collect(Collectors.toList());
-//    }
-
     @Override
     public List<Person> getAllPersonBySkill(String skillName) {
-//        final Skill skill = skillRepository.findByName(skillName);
-//        final List<Person> personList = personRepository.findAll();
-//        return personList.stream().filter((p) -> p.getSkillByLevel().containsKey(skill)).collect(Collectors.toList());
         return personRepository.findBySkill(skillName);
     }
 

@@ -24,7 +24,7 @@ public class PersonRepositoryTest {
 
     @Test
     public void repositorySavesPerson() {
-        Person person = new Person();
+        final Person person = new Person();
         person.setId(1);
         person.setName("John");
         person.setUsername("peter@example.com");
@@ -34,8 +34,8 @@ public class PersonRepositoryTest {
 
         //assertEquals(result.getName(), "John");
         //assertEquals(result.getAge(), 25);
-        assertEquals(repository.findByUsername(person.getUsername()).getUsername(),"peter@example.com");
-        assertEquals(repository.findByUsername(person.getUsername()).getName(),"John");
+        assertEquals(repository.findByUsername(person.getUsername()).getUsername(), "peter@example.com");
+        assertEquals(repository.findByUsername(person.getUsername()).getName(), "John");
         assertEquals(repository.findByUsername(person.getUsername()).getAge(), 25);
         assertEquals(repository.findByUsername(person.getUsername()).getId(), 1);
     }

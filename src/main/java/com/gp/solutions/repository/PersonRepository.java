@@ -18,13 +18,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     List<Person> findByParties(Party party);
 
-
-//  @Query("SELECT p FROM Person as p join people_skill_level as psl on p.id = psl.person_id join Skill as s on s.id = psl.skill_id where s.name = :skillName")
-
-    //   @Query("SELECT p FROM Person p " +
-//           "join p.id people_skill_level " +
-//           "join skill.skill_id people_skill_level " +
-//           "where skill.name = :skillName")
     @Query(value = "select * from people AS p " +
             "join people_skill_level as psl on p.person_id = psl.person_id " +
             "join skill as s on s.skill_id = psl.skill_id " +
