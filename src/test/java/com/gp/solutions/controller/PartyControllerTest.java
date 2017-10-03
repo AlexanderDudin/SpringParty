@@ -2,6 +2,7 @@ package com.gp.solutions.controller;
 
 import com.gp.solutions.entity.dbo.Party;
 import com.gp.solutions.repository.PartyRepository;
+import com.gp.solutions.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,10 @@ public class PartyControllerTest {
 
 	@MockBean
 	private PartyRepository partyRepo;
-	
+
+	@MockBean
+	private UserRepository userRepository;
+
 	private Party party;
 	
 	@Before
