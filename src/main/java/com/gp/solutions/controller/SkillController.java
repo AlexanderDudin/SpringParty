@@ -24,6 +24,9 @@ public class SkillController {
     @Autowired
     private SkillService skillService;
 
+    /**
+     * Finds and returns skills in accordance with the introduced level name.
+     */
     @RequestMapping(value = "/level/{levelName}", method = RequestMethod.GET)
     public ResponseEntity<Collection<Skill>> getSkillByLevel(@PathVariable String levelName) {
         final List<Skill> skills = skillService.getSkillByLevel(levelName);

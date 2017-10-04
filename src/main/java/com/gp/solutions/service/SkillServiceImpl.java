@@ -15,7 +15,9 @@ public class SkillServiceImpl implements SkillService {
     @Autowired
     private SkillRepository skillRepository;
 
-
+    /**
+     * Finds and returns skills in accordance with the introduced level name.
+     */
     @Override
     public List<Skill> getSkillByLevel(String levelName) {
         return skillRepository.findByLevel(levelName);

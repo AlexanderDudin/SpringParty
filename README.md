@@ -24,4 +24,4 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Au
 ```
 ## Swagger
 
-rest methods described on swagger: http://localhost:8000/gpsolutions/swagger-ui.html
+Rest methods described on swagger: http://localhost:8000/gpsolutions/swagger-ui.html

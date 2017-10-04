@@ -24,11 +24,17 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     SkillRepository skillRepository;
 
+    /**
+     * Finds and returns persons in accordance with the introduced skill name.
+     */
     @Override
     public List<Person> getAllPersonBySkill(String skillName) {
         return personRepository.findBySkill(skillName);
     }
 
+    /**
+     * Finds and returns persons in accordance with the introduced skill name and party name.
+     */
     @Override
     public List<Person> getAllPersonBySkillAndParty(String skillName, String location) {
         return personRepository.findBySkillAndParty(skillName, location);

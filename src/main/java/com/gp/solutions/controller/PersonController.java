@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,14 +38,17 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @Autowired
-    private UserRepository userRepository;
-
+    /**
+     * Finds and returns all persons.
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<Person>> getPeople() {
         return new ResponseEntity<>(personRepo.findAll(), HttpStatus.OK);
     }
 
+    /**
+     * Finds and returns person by id.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
         final Person person = personRepo.findOne(id);
@@ -56,22 +60,26 @@ public class PersonController {
         }
     }
 
+    /**
+     * Add new person.
+     */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addPerson(@RequestBody Person person, Principal principal) {
-        final User currentUser = userRepository.findOneByUsername(principal.getName());
-        if (UserRole.ADMIN.equals(currentUser.getUserRole())) {
+    public ResponseEntity<?> addPerson(@RequestBody Person person, @AuthenticationPrincipal User activeUser) {
+        if (UserRole.ADMIN.equals(activeUser.getUserRole())) {
             return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
+    /**
+     * Delete person by id.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deletePerson(@PathVariable long id, Principal principal) {
-        final Person currentPerson = personRepo.findByUsername(principal.getName());
-        final User currentUser = userRepository.findOneByUsername(principal.getName());
+    public ResponseEntity<Void> deletePerson(@PathVariable long id, @AuthenticationPrincipal User activeUser) {
+        final Person currentPerson = personRepo.findByUsername(activeUser.getUsername());
         final Person deletePerson = personRepo.findOne(id);
-        if ((currentPerson.getId() == id || UserRole.ADMIN.equals(currentUser.getUserRole())) && deletePerson != null) {
+        if ((currentPerson.getId() == id || UserRole.ADMIN.equals(activeUser.getUserRole())) && deletePerson != null) {
             personRepo.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -79,6 +87,9 @@ public class PersonController {
         }
     }
 
+    /**
+     * Finds and returns all persons in accordance with the introduced party name.
+     */
     @RequestMapping(value = "/{id}/parties", method = RequestMethod.GET)
     public ResponseEntity<Collection<Party>> getPersonParties(@PathVariable long id) {
         final Person person = personRepo.findOne(id);
@@ -90,6 +101,9 @@ public class PersonController {
         }
     }
 
+    /**
+     * Finds and returns all persons in accordance with the introduced skill name.
+     */
     @RequestMapping(value = "/skill/{skillName}", method = RequestMethod.GET)
     public ResponseEntity<Collection<Person>> getPersonsBySkill(@PathVariable String skillName) {
         final List<Person> people = personService.getAllPersonBySkill(skillName);
@@ -100,6 +114,9 @@ public class PersonController {
         }
     }
 
+    /**
+     * Finds and returns all persons in accordance with the introduced party and skill name.
+     */
     @RequestMapping(value = "/skill/{skillName}/party/{location}", method = RequestMethod.GET)
 
     public ResponseEntity<Collection<Person>> getPersonsBySkillAndParty(@PathVariable String skillName, @PathVariable String location) {
