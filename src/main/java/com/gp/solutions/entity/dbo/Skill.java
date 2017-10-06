@@ -1,11 +1,9 @@
 package com.gp.solutions.entity.dbo;
 
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "skill")

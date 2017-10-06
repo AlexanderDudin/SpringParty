@@ -1,42 +1,37 @@
 package com.gp.solutions.service;
 
-import com.gp.solutions.entity.dbo.Party;
 import com.gp.solutions.entity.dbo.Person;
-import com.gp.solutions.entity.dbo.Skill;
-import com.gp.solutions.repository.PartyRepository;
 import com.gp.solutions.repository.PersonRepository;
-import com.gp.solutions.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
-    PersonRepository personRepository;
-    @Autowired
-    PartyRepository partyRepository;
-    @Autowired
-    SkillRepository skillRepository;
+    private PersonRepository personRepository;
 
     /**
-     * Finds and returns persons in accordance with the introduced skill name.
+     * @param skillName - name of skill for finding
+     * @return persons in accordance with the introduced skill name
      */
     @Override
-    public List<Person> getAllPersonBySkill(String skillName) {
+    public List<Person> getAllPersonBySkill(final String skillName) {
         return personRepository.findBySkill(skillName);
     }
 
+
     /**
-     * Finds and returns persons in accordance with the introduced skill name and party name.
+     * @param skillName - name of skill for search
+     * @param location  - location of party or otherwise the name of the party
+     * @return persons in accordance with the introduced skill name and party location
      */
     @Override
-    public List<Person> getAllPersonBySkillAndParty(String skillName, String location) {
+    public List<Person> getAllPersonBySkillAndParty(final String skillName, final String location) {
         return personRepository.findBySkillAndParty(skillName, location);
     }
 }

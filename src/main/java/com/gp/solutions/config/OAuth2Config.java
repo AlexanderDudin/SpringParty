@@ -15,13 +15,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
-
 @Configuration
 @EnableAuthorizationServer
 @PropertySource("classpath:authorization.properties")
@@ -68,7 +61,6 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 authorizedGrantTypes("password", "refresh_token").
                 resourceIds(getResourceId);
     }
-
 
 
 }

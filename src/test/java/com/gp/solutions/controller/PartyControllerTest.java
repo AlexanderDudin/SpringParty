@@ -60,7 +60,7 @@ public class PartyControllerTest {
 	
 	@Test
 	public void getPartiesTest() throws Exception {
-		List<Party> parties = new ArrayList<Party>();
+		final List<Party> parties = new ArrayList<Party>();
 		parties.add(party);
 		
 		given(partyRepo.findAll()).willReturn(parties);

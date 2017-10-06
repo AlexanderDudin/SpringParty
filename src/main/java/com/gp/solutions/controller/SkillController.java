@@ -25,10 +25,11 @@ public class SkillController {
     private SkillService skillService;
 
     /**
-     * Finds and returns skills in accordance with the introduced level name.
+     * @param levelName - name level for search
+     * @return skills in accordance with the introduced level name
      */
     @RequestMapping(value = "/level/{levelName}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<Skill>> getSkillByLevel(@PathVariable String levelName) {
+    public ResponseEntity<Collection<Skill>> getSkillByLevel(@PathVariable final String levelName) {
         final List<Skill> skills = skillService.getSkillByLevel(levelName);
         if (!skills.isEmpty()) {
             return new ResponseEntity<>(skills, HttpStatus.OK);

@@ -1,12 +1,12 @@
 package com.gp.solutions.entity.dbo;
 
-import java.util.*;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "people")

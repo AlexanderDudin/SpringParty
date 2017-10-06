@@ -66,7 +66,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void getPeopleTest() throws Exception {
-		List<Person> people = new ArrayList<Person>();
+		final List<Person> people = new ArrayList<Person>();
 		people.add(person);
 
 		given(personRepo.findAll()).willReturn(people);

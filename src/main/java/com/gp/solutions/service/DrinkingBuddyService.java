@@ -15,15 +15,16 @@ public class DrinkingBuddyService implements BuddyService {
     private PersonRepository repository;
 
     @Autowired
-    public DrinkingBuddyService(PersonRepository repository) {
+    public DrinkingBuddyService(final PersonRepository repository) {
         this.repository = repository;
     }
 
     /**
-     * Finds and returns person with smallest age difference to the input.
+     * @param person - incoming search person
+     * @return person with smallest age difference to the input
      */
     @Override
-    public Person findBuddy(Person person) {
+    public Person findBuddy(final Person person) {
 
 
         final List<Person> all = repository.findAll();

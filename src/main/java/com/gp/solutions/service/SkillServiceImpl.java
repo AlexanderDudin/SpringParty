@@ -16,10 +16,11 @@ public class SkillServiceImpl implements SkillService {
     private SkillRepository skillRepository;
 
     /**
-     * Finds and returns skills in accordance with the introduced level name.
+     * @param levelName level name for search
+     * @return skills in accordance with the introduced level name
      */
     @Override
-    public List<Skill> getSkillByLevel(String levelName) {
+    public List<Skill> getSkillByLevel(final String levelName) {
         return skillRepository.findByLevel(levelName);
     }
 }

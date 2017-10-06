@@ -2,9 +2,7 @@ package com.gp.solutions.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import springfox.documentation.builders.PathSelectors;
-
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -47,13 +45,12 @@ public class SwaggerConfig {
     }
 
     private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
+        final AuthorizationScope authorizationScope
                 = new AuthorizationScope(authorizationScopeGlobal, authorizationScopeGlobalDesc);
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        final AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Collections.singletonList(
                 new SecurityReference(securitySchemaOAuth2, authorizationScopes));
     }
-
 
 }
