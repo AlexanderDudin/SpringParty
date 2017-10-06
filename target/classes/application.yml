@@ -32,3 +32,17 @@ spring:
 
 logging:
   path: ./log
+
+swagger: "2.0"
+info:
+  description: "Interact with example"
+  version: "V1.1.0"
+  title: "The example API"
+  termsOfService: "http://example.com"
+  contact:
+    name: "André Schild"
+    url: "http://example.com"
+    email: "a.schild@aarboard.ch"
+  license:
+    name: "example License"
+    url: "http://example.com/"
