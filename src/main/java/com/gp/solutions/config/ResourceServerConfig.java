@@ -15,9 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 @PropertySource("classpath:authorization.properties")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-    // needs to be a separate config in order to be used in unit test with custom slices
-    @Value("${authorization.resourceIds}")
-    private String getResourceId;
+    public static final String RESOURCE_ID = "resource";
+
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -31,6 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId(getResourceId);
+        resources
+                .resourceId(RESOURCE_ID);
     }
 }

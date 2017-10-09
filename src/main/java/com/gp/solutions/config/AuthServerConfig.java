@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,17 +14,19 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
+import static com.gp.solutions.config.ResourceServerConfig.RESOURCE_ID;
+
+
 @Configuration
 @EnableAuthorizationServer
-@PropertySource("classpath:authorization.properties")
-public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
+public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Value("${authorization.expiration}")
     private int expiration;
@@ -39,28 +40,33 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Value("${authorization.resourceIds}")
     private String getResourceId;
 
-    // password encryptor
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+            .inMemory()
+            .withClient(client)
+            .authorizedGrantTypes("password", "refresh-token")
+            .accessTokenValiditySeconds(expiration)
+            .scopes("read", "write")
+            .secret(secret)
+            .resourceIds(getResourceId)
+            .and()
+            .withClient("swagger-ui")
+            .authorizedGrantTypes("implicit")
+            .scopes("read", "write"/*, "vendorExtensions"*/)
+            .resourceIds(getResourceId)
+            .autoApprove(true);
+    }
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints
+            .authenticationManager(authenticationManager)
+            .userDetailsService(userDetailsService);
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer configurer) throws Exception {
-        configurer.authenticationManager(authenticationManager);
-        configurer.userDetailsService(userDetailsService);
-    }
-
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().
-                withClient(client).
-                secret(secret).
-                accessTokenValiditySeconds(expiration).
-                scopes("read", "write").
-                authorizedGrantTypes("password", "refresh_token").
-                resourceIds(getResourceId);
-    }
-
-
 }
