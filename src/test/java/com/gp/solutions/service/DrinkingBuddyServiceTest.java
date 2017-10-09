@@ -41,7 +41,7 @@ public class DrinkingBuddyServiceTest {
         people.add(p2);
 
         final Person p3 = new Person();
-        p3.setId(1l);
+        p3.setId(3l);
         p3.setName("Peter");
         p3.setAge(35);
         people.add(p3);

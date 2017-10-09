@@ -33,7 +33,7 @@ public class DrinkingBuddyService implements BuddyService {
                 .min((p1, p2) -> {
                     final int diff1 = Math.abs(person.getAge() - p1.getAge());
                     final int diff2 = Math.abs(person.getAge() - p2.getAge());
-                    return Integer.min(diff1, diff2);
+                    return Integer.compare(diff1, diff2);
                 });
 
         return buddy.orElse(null);
