@@ -27,38 +27,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value = SkillController.class, secure = false)
 public class SkillControllerTest {
 
-	@Autowired
-	private MockMvc mvc;
+    @Autowired
+    private MockMvc mvc;
 
-	@MockBean
-	private SkillService skillService;
+    @MockBean
+    private SkillService skillService;
 
-	@MockBean
-	private SkillRepository skillRepository;
+    @MockBean
+    private SkillRepository skillRepository;
 
-   	private Skill skill;
-   	private Level level;
-	
-	@Before
-	public void prepare() {
-		skill = new Skill();
-		skill.setId(1l);
-		skill.setName("Story-telling");
-	}
+    private Skill skill;
+    private Level level;
 
-	@Test
-	public void getSkillTest() throws Exception {
-		final List<Skill> skills = new ArrayList<Skill>();
-		skills.add(skill);
+    @Before
+    public void prepare() {
+        skill = new Skill();
+        skill.setId(1l);
+        skill.setName("Story-telling");
+    }
 
-		given(skillService.getSkillByLevel("GODLIKE")).willReturn(skills);
-		mvc.perform(get("/skill/level/GODLIKE").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
-				.andExpect(jsonPath("$[0].id", is(1)))
-				.andExpect(jsonPath("$[0].name", is("Story-telling")));
-	}
-	
-	@Test
-	public void skillNotFoundTest() throws Exception {
-		mvc.perform(get("/skill/level/BAD").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
-	}
+    @Test
+    public void getSkillTest() throws Exception {
+        final List<Skill> skills = new ArrayList<Skill>();
+        skills.add(skill);
+
+        given(skillService.getSkillByLevel("GODLIKE")).willReturn(skills);
+        mvc.perform(get("/skill/level/GODLIKE").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].name", is("Story-telling")));
+    }
+
+    @Test
+    public void skillNotFoundTest() throws Exception {
+        mvc.perform(get("/skill/level/BAD").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
+    }
 }

@@ -14,8 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
-import static com.gp.solutions.config.ResourceServerConfig.RESOURCE_ID;
-
 
 @Configuration
 @EnableAuthorizationServer
@@ -43,26 +41,26 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-            .inMemory()
-            .withClient(client)
-            .authorizedGrantTypes("password", "refresh-token")
-            .accessTokenValiditySeconds(expiration)
-            .scopes("read", "write")
-            .secret(secret)
-            .resourceIds(getResourceId)
-            .and()
-            .withClient("swagger-ui")
-            .authorizedGrantTypes("implicit")
-            .scopes("read", "write"/*, "vendorExtensions"*/)
-            .resourceIds(getResourceId)
-            .autoApprove(true);
+                .inMemory()
+                .withClient(client)
+                .authorizedGrantTypes("password", "refresh-token")
+                .accessTokenValiditySeconds(expiration)
+                .scopes("read", "write")
+                .secret(secret)
+                .resourceIds(getResourceId)
+                .and()
+                .withClient("swagger-ui")
+                .authorizedGrantTypes("implicit")
+                .scopes("read", "write"/*, "vendorExtensions"*/)
+                .resourceIds(getResourceId)
+                .autoApprove(true);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-            .authenticationManager(authenticationManager)
-            .userDetailsService(userDetailsService);
+                .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
     }
 
     @Bean

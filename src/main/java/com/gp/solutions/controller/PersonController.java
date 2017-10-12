@@ -2,15 +2,12 @@ package com.gp.solutions.controller;
 
 import com.gp.solutions.entity.dbo.Party;
 import com.gp.solutions.entity.dbo.Person;
-import com.gp.solutions.entity.dbo.User;
 import com.gp.solutions.repository.PersonRepository;
 import com.gp.solutions.service.PersonService;
-import com.gp.solutions.type.UserRole;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -53,36 +50,27 @@ public class PersonController {
     }
 
     /**
-     * @param person     - data on the new person
-     * @param activeUser - user who send request
+     * @param person - data on the new person
      * @return new person
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addPerson(@RequestBody final Person person,
-                                       @AuthenticationPrincipal final User activeUser) {
-        if (UserRole.ADMIN.equals(activeUser.getUserRole())) {
-            return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> addPerson(@RequestBody final Person person) {
+        return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
     }
 
 
     /**
-     * @param id         - person id
-     * @param activeUser - user who send request
+     * @param id - person id
      * @return delete person by id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deletePerson(@PathVariable final long id,
-                                             @AuthenticationPrincipal final User activeUser) {
-        final Person currentPerson = personRepo.findByUsername(activeUser.getUsername());
+    public ResponseEntity<Void> deletePerson(@PathVariable final long id) {
         final Person deletePerson = personRepo.findOne(id);
-        if ((currentPerson.getId() == id || UserRole.ADMIN.equals(activeUser.getUserRole())) && deletePerson != null) {
+        if (deletePerson != null) {
             personRepo.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

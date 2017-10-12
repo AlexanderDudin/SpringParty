@@ -1,18 +1,14 @@
 package com.gp.solutions.controller;
 
 import com.gp.solutions.entity.dbo.Party;
-import com.gp.solutions.entity.dbo.User;
 import com.gp.solutions.repository.PartyRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-
-import static com.gp.solutions.type.UserRole.ADMIN;
 
 @RestController
 @RequestMapping(PartyController.REQUEST_MAPPING)
@@ -48,32 +44,21 @@ public class PartyController {
     }
 
     /**
-     * @param party      - data on the new party
-     * @param activeUser - user who send request
+     * @param party - data on the new party
      * @return new party
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Party> addParty(@RequestBody final Party party,
-                                          @AuthenticationPrincipal final User activeUser) {
-        if (ADMIN.equals(activeUser.getUserRole())) {
-            return new ResponseEntity<>(partyRepo.save(party), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<Party> addParty(@RequestBody final Party party) {
+        return new ResponseEntity<>(partyRepo.save(party), HttpStatus.CREATED);
     }
 
     /**
      * Delete party by id.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteParty(@PathVariable final long id,
-                                            @AuthenticationPrincipal final User activeUser) {
-        if (ADMIN.equals(activeUser.getUserRole())) {
-            partyRepo.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<Void> deleteParty(@PathVariable final long id) {
+        partyRepo.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

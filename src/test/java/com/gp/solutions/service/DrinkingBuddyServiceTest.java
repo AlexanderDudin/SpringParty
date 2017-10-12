@@ -1,19 +1,18 @@
 package com.gp.solutions.service;
 
-import org.junit.Test;
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gp.solutions.entity.dbo.Person;
 import com.gp.solutions.repository.PersonRepository;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DrinkingBuddyServiceTest {

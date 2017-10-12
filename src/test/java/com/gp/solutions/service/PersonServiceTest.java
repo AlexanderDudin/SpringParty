@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyMap;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +35,7 @@ public class PersonServiceTest {
 
     private List<Party> parties = new ArrayList<>();
 
-    private Map<Skill,Level> skillByLevel = new HashMap<>();
+    private Map<Skill, Level> skillByLevel = new HashMap<>();
 
     private Skill skill = new Skill();
 
@@ -67,7 +66,7 @@ public class PersonServiceTest {
         p2.setSkillByLevel(skillByLevel);
         people.add(p2);
 
-        skillByLevel.put(skill,level);
+        skillByLevel.put(skill, level);
 
         level.setId(1l);
         level.setName("GOOD");
@@ -88,22 +87,22 @@ public class PersonServiceTest {
     public void getAllPersonBySkillTest() {
 
         when(service.getAllPersonBySkill(skill.getName())).thenReturn(people);
-        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getId(),1);
-        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getAge(),25);
-        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getName(),"John");
-        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getUsername(),"John");
-        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getParties(),parties);
+        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getId(), 1);
+        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getAge(), 25);
+        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getName(), "John");
+        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getUsername(), "John");
+        assertEquals(service.getAllPersonBySkill(skill.getName()).get(0).getParties(), parties);
     }
 
     @Test
     public void getAllPersonBySkillAndPartyTest() {
 
-        when(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation())).thenReturn(people);
-        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation()).get(1).getId(),2);
-        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation()).get(1).getAge(),22);
-        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation()).get(1).getName(),"Marry");
-        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation()).get(1).getUsername(),"Marry");
-        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(),party.getLocation()).get(1).getParties(),parties);
+        when(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation())).thenReturn(people);
+        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation()).get(1).getId(), 2);
+        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation()).get(1).getAge(), 22);
+        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation()).get(1).getName(), "Marry");
+        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation()).get(1).getUsername(), "Marry");
+        assertEquals(service.getAllPersonBySkillAndParty(skill.getName(), party.getLocation()).get(1).getParties(), parties);
 
     }
 

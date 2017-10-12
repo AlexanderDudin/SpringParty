@@ -1,6 +1,5 @@
 package com.gp.solutions.repository;
 
-import com.gp.solutions.entity.dbo.Party;
 import com.gp.solutions.entity.dbo.Skill;
 import org.junit.Assert;
 import org.junit.Before;
