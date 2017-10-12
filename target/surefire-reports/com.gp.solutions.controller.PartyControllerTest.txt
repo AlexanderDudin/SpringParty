@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.gp.solutions.controller.PartyControllerTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.855 sec - in com.gp.solutions.controller.PartyControllerTest
