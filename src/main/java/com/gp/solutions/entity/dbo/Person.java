@@ -1,6 +1,6 @@
 package com.gp.solutions.entity.dbo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
     private long id;
 
@@ -27,14 +27,15 @@ public class Person {
     private int age;
 
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JsonBackReference
+    @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "people_parties",
             joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "party_id"))
     private List<Party> parties;
 
     @ElementCollection
+    @JsonIgnore
     @JoinTable(name = "people_skill_level", joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "level_id"))
     @MapKeyJoinColumn(name = "skill_id")

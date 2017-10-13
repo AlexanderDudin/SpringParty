@@ -15,17 +15,17 @@ import java.util.List;
 public class Party {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "party_id")
     private long id;
 
     private String location;
 
     @Column(name = "party_date")
-    @JsonFormat(pattern = "YYYY-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "people_parties",
             joinColumns = @JoinColumn(name = "party_id", referencedColumnName = "party_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "person_id"))

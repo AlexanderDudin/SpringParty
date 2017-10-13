@@ -141,7 +141,7 @@ public class PersonControllerTest {
     @Test
     public void getPersonsBySkillTest() throws Exception {
         given(personService.getAllPersonBySkill(skill.getName())).willReturn(people);
-        mvc.perform(get("/people/skill/"+skill.getName()).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
+        mvc.perform(get("/people/skill/" + skill.getName()).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].name", is("John")))
                 .andExpect(jsonPath("$[0].age", is(25)));
@@ -149,8 +149,8 @@ public class PersonControllerTest {
 
     @Test
     public void ggetPersonsBySkillAndPartyTest() throws Exception {
-        given(personService.getAllPersonBySkillAndParty(skill.getName(),party.getLocation())).willReturn(people);
-        mvc.perform(get("/people//skill/"+skill.getName()+"/party/"+party.getLocation())
+        given(personService.getAllPersonBySkillAndParty(skill.getName(), party.getLocation())).willReturn(people);
+        mvc.perform(get("/people//skill/" + skill.getName() + "/party/" + party.getLocation())
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].name", is("Marry")))

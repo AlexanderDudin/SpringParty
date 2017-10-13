@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Level {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "level_id")
     private long id;
 
