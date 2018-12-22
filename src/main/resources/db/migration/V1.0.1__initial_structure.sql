@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS level (
 
 CREATE TABLE IF NOT EXISTS people_parties (
   id        SERIAL PRIMARY KEY,
-  person_id BIGINT NOT NULL REFERENCES people (person_id),
-  party_id  BIGINT NOT NULL REFERENCES party (party_id),
+  person_id BIGINT(20) UNSIGNED NOT NULL REFERENCES people (person_id),
+  party_id  BIGINT(20) UNSIGNED NOT NULL REFERENCES party (party_id),
 
   UNIQUE (person_id, party_id),
   CONSTRAINT people_parties__people_FK FOREIGN KEY (person_id) REFERENCES people (person_id),
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS people_parties (
 
 CREATE TABLE IF NOT EXISTS skill_level (
   id       SERIAL PRIMARY KEY,
-  skill_id BIGINT NOT NULL REFERENCES skill (skill_id),
-  level_id BIGINT NOT NULL REFERENCES level (level_id),
+  skill_id BIGINT(20) UNSIGNED NOT NULL REFERENCES skill (skill_id),
+  level_id BIGINT(20) UNSIGNED NOT NULL REFERENCES level (level_id),
 
   UNIQUE (skill_id, level_id),
   CONSTRAINT skill_level__skill_FK FOREIGN KEY (skill_id) REFERENCES skill (skill_id),
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS skill_level (
 
 CREATE TABLE IF NOT EXISTS people_skill_level (
   psl_id    SERIAL PRIMARY KEY,
-  person_id BIGINT NOT NULL REFERENCES people (person_id),
-  skill_id  BIGINT NOT NULL REFERENCES skill (skill_id),
-  level_id  BIGINT NOT NULL REFERENCES level (level_id),
+  person_id BIGINT(20) UNSIGNED NOT NULL REFERENCES people (person_id),
+  skill_id  BIGINT(20) UNSIGNED NOT NULL REFERENCES skill (skill_id),
+  level_id  BIGINT(20) UNSIGNED NOT NULL REFERENCES level (level_id),
 
   UNIQUE (person_id, skill_id, level_id),
   CONSTRAINT people_skill_level__people_FK FOREIGN KEY (person_id) REFERENCES people (person_id),

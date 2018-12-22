@@ -22,11 +22,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(PartyController.REQUEST_MAPPING + "/**").authenticated()
-                .antMatchers(PersonController.REQUEST_MAPPING + "/**").authenticated()
-                .antMatchers(SkillController.REQUEST_MAPPING + "/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/**").hasRole(UserRole.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE, "/**").hasRole(UserRole.ADMIN.name())
+//                .antMatchers(PartyController.REQUEST_MAPPING + "/**").authenticated()
+//                .antMatchers(PersonController.REQUEST_MAPPING + "/**").authenticated()
+//                .antMatchers(SkillController.REQUEST_MAPPING + "/**").authenticated()
+//                .antMatchers("/lol"+ "/**").authenticated()
+//                .antMatchers(HttpMethod.POST, "/**").hasRole(UserRole.ADMIN.name())
+//                .antMatchers(HttpMethod.DELETE, "/**").hasRole(UserRole.ADMIN.name())
                 .anyRequest().permitAll();
     }
 
