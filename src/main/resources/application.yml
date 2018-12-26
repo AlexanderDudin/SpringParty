@@ -12,7 +12,7 @@ spring:
     basename: messages/messages
     encoding: UTF-8
   jpa:
-    database: postgresql
+    database: mysql
     properties:
       hibernate:
         order_inserts: true
@@ -25,8 +25,8 @@ spring:
     show-sql: true
 
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/testdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: root
 
