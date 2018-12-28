@@ -4,17 +4,24 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.ui.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+@Data
+@NoArgsConstructor
 public class EmailForm extends Panel {
 
     @PropertyId("name")
     private final TextField nameTextField = new TextField("Name");
     @PropertyId("message")
-    private final TextField messageTextField = new TextField("Message");
+    private final TextArea messageTextField = new TextArea("Message");
     @PropertyId("recipients")
-    private final TextField recipientsTextField = new TextField("Recipients");
+    private final StringListField recipientsTextField = new StringListField("Recipients");
     @PropertyId("date")
-    private final TextField dateTextField = new TextField("Date");
+    private final LocalDateField dateTextField = new LocalDateField("Date");
 
     private Runnable onSaveOrDiscard;
     private BeanFieldGroup<Email> emailFieldGroup;

@@ -8,7 +8,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class NotesUI extends UI {
         final VerticalLayout layout = new VerticalLayout();
         final HorizontalLayout horizontalLayout = new HorizontalLayout();
         final Window myWindow = new Window("Email");
+
 //        final Label label = new Label("Hello, vaadin team!");
 //        final Button button = new Button("Push me!");
 //        button.setIcon(FontAwesome.YOUTUBE);
@@ -48,16 +50,22 @@ public class NotesUI extends UI {
         Grid.MultiSelectionModel selection =
                 (Grid.MultiSelectionModel) grid.getSelectionModel();
 
-        Button add = new Button("Add");
+        Button add = new Button("Add", e -> {
+
+            final EmailForm emailForm = new EmailForm(new Email("", "", Collections.singletonList(""), LocalDate.now()), myWindow::close);
+            final VerticalLayout subContent = new VerticalLayout();
+            subContent.setMargin(true);
+            subContent.addComponent(emailForm);
+            myWindow.setContent(subContent);
+
+            this.addWindow(myWindow);
+
+        });
         Button editSelected = new Button("Edit", e -> {
 
-            grid.getSelectionModel().reset();
+            Object selected = selection.getSelectedRows().iterator().next();
 
-            Object selected = ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
-
-            final EmailForm emailForm = new EmailForm((Email) selected, () -> {
-
-            });
+            final EmailForm emailForm = new EmailForm((Email) selected, myWindow::close);
             final VerticalLayout subContent = new VerticalLayout();
             subContent.setMargin(true);
             subContent.addComponent(emailForm);
@@ -86,6 +94,9 @@ public class NotesUI extends UI {
             delSelected.setVisible(grid.getSelectedRows().size() > 0);
         });
 
+        myWindow.addCloseListener(clickEvent -> {
+            grid.refreshAllRows();
+        });
 
         layout.addComponent(grid);
         horizontalLayout.addComponent(add);
@@ -95,5 +106,4 @@ public class NotesUI extends UI {
         setContent(layout);
 
     }
-
 }
