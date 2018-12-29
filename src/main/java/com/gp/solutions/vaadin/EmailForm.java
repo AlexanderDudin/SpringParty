@@ -7,9 +7,6 @@ import com.vaadin.ui.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 @Data
 @NoArgsConstructor
 public class EmailForm extends Panel {
@@ -52,7 +49,7 @@ public class EmailForm extends Panel {
             emailFieldGroup.commit();
             onSaveOrDiscard.run();
         } catch (FieldGroup.CommitException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Hello, guys");
         }
 
     }

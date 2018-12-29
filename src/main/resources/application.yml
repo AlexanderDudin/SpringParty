@@ -1,9 +1,10 @@
 server:
-  context-path: /gpsolutions/
   port: 8000
   error:
     whitelabel:
       enabled: false
+  servlet:
+    context-path: /gpsolutions/
 
 spring:
   application:

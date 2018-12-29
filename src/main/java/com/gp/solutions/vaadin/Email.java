@@ -1,18 +1,24 @@
 package com.gp.solutions.vaadin;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.*;
 
-@Data
 @NoArgsConstructor
 public class Email {
 
+    @Getter
+    @Setter
     private String name;
+    @Getter
+    @Setter
     private String message;
+    @Getter
+    @Setter
     private List<String> recipients;
+    @Getter
+    @Setter
     private LocalDate date;
 
     public Email(String name, String message, List<String> recipients, LocalDate date) {

@@ -16,12 +16,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.gp.solutions.config.ResourceServerConfig.RESOURCE_ID;
-
 
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+        public static final String RESOURCE_ID = "resource";
 
     @Bean
     public Docket api() {
