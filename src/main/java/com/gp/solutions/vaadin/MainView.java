@@ -9,7 +9,7 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.UI;
 
 @SpringView(name = MainView.NAME)
-public class MainView extends CustomComponent implements View, ViewAccessControl {
+public class MainView extends CustomComponent implements View {
 
     public final static String NAME = "main";
 
@@ -24,11 +24,5 @@ public class MainView extends CustomComponent implements View, ViewAccessControl
 
     }
 
-    @Override
-    public boolean isAccessGranted(UI ui, String beanName) {
-        if ("notAvailableView".equals(beanName)) {
-            return false;
-        }
-        return true;
-    }
+
 }

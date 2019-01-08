@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringUI(path = "vaadin")
 @Theme("mytheme")
-public class NotesUI extends UI {
+public class NotesUI extends UI implements ViewAccessControl{
 
     @Autowired
     private final SpringViewProvider springViewProvider;
@@ -29,5 +29,13 @@ public class NotesUI extends UI {
         navigator.addProvider(springViewProvider);
         navigator.navigateTo(MainView.NAME);
         navigator.setErrorView(new ErrorView());
+    }
+
+    @Override
+    public boolean isAccessGranted(UI ui, String beanName) {
+        if ("notAvailableView".equals(beanName)) {
+            return false;
+        }
+        return true;
     }
 }
