@@ -1,6 +1,10 @@
 package com.gp.solutions.vaadin;
 
-import com.vaadin.data.util.BeanItemContainer;
+import com.gp.solutions.entity.dbo.Email;
+import com.gp.solutions.repository.EmailRepository;
+import com.vaadin.addon.jpacontainer.JPAContainer;
+import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -9,15 +13,19 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManagerFactory;
 import java.time.LocalDate;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringView(name = EmailView.NAME)
 public class EmailView extends CustomComponent implements View {
 
     @Autowired
-    private EmailsCache emailsCache;
+    private EmailRepository emailRepository;
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     public final static String NAME = "email";
 
@@ -38,23 +46,38 @@ public class EmailView extends CustomComponent implements View {
 
 //        final List<Skill> skills = skillRepository.findAll();
 
-        final List<Email> emails = emailsCache.getEmails();
+        final List<Email> emails = emailRepository.findAll();
 
+        final JPAContainer<Email> container = JPAContainerFactory.make(Email.class, entityManagerFactory.createEntityManager());
 
-
-        final BeanItemContainer<Email> container = new BeanItemContainer<>(Email.class, emails);
+//        final BeanItemContainer<Email> container = new BeanItemContainer<>(Email.class, emails);
 
         final Grid grid = new Grid(container);
         grid.setSizeFull();
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
 
+        //filter Message
+        Grid.HeaderRow filterRow = grid.appendHeaderRow();
+        Grid.HeaderCell cell = filterRow.getCell("message");
+        TextField filterField = new TextField();
+        filterField.addTextChangeListener(change -> {
+            container.removeContainerFilters("message");
+            if (!change.getText().isEmpty())
+                container.addContainerFilter(new SimpleStringFilter("message", change.getText(), true, false));
+        });
+        cell.setComponent(filterField);
+
         Button add = new Button("Add", e -> {
             final Window myWindow = new Window("Email");
 
-            final Email email = new Email("", "", Collections.singletonList(""), LocalDate.now());
+            final Email email = new Email("", "", new ArrayList<>(), LocalDate.now());
             final EmailForm emailForm = new EmailForm(email, () -> {
-                emails.add(email);
-                container.addItem(email);
+                if (email.getName() != "") {
+//                    emails.add(email);
+//                    container.addItem(email);
+                    emailRepository.save(email);
+                    container.refresh();
+                }
                 myWindow.close();
             });
 
@@ -73,8 +96,10 @@ public class EmailView extends CustomComponent implements View {
             final Window myWindow = new Window("Email");
 
             Object selected = grid.getSelectedRows().iterator().next();
-            final Email email = (Email) selected;
+            final Email email = emailRepository.findById((Long) selected).orElseThrow(RuntimeException::new);
             final EmailForm emailForm = new EmailForm(email, () -> {
+                emailRepository.save(email);
+                container.refresh();
                 myWindow.close();
             });
             final VerticalLayout subContent = new VerticalLayout();
@@ -91,8 +116,10 @@ public class EmailView extends CustomComponent implements View {
         Button delSelected = new Button("Remove", e -> {
             // Delete all selected data items
             for (Object itemId : grid.getSelectedRows()) {
+                emailRepository.deleteById((Long) itemId);
                 grid.getContainerDataSource().removeItem(itemId);
-                emails.remove(itemId);
+                //emails.remove(itemId);
+                container.refresh();
             }
         });
         editSelected.setVisible(false);
@@ -109,7 +136,7 @@ public class EmailView extends CustomComponent implements View {
         horizontalLayout.addComponent(editSelected);
         horizontalLayout.addComponent(delSelected);
         layout.addComponent(horizontalLayout);
-        layout.addComponent(new Button("Cancel",c -> {
+        layout.addComponent(new Button("Cancel", c -> {
             Page.getCurrent().setLocation(VaadinServlet.getCurrent()
                     .getServletContext().getContextPath() +
                     "/vaadin");

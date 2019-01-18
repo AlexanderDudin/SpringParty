@@ -1,11 +1,15 @@
 package com.gp.solutions.vaadin;
 
+import com.gp.solutions.entity.dbo.Email;
+import com.vaadin.data.Validator;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.ui.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -33,6 +37,16 @@ public class EmailForm extends Panel {
         setContent(content);
         setSizeUndefined();
 
+        dateTextField.addValidator(value -> {
+            if (value == null) {
+                throw new Validator.InvalidValueException("date is empty");
+            }
+            if (((LocalDate)value).isBefore(LocalDate.now()))
+            {
+                throw new Validator.InvalidValueException("date is before today");
+            }
+        });
+
         FormLayout form = new FormLayout();
         form.addComponents(nameTextField, messageTextField, recipientsTextField, dateTextField);
         content.addComponent(form);
@@ -49,15 +63,12 @@ public class EmailForm extends Panel {
             emailFieldGroup.commit();
             onSaveOrDiscard.run();
         } catch (FieldGroup.CommitException e) {
-            throw new RuntimeException("Hello, guys");
+            Notification.show("Form isn't valid", Notification.Type.WARNING_MESSAGE);
         }
-
     }
 
     private void discard(Button.ClickEvent event) {
         emailFieldGroup.discard();
         onSaveOrDiscard.run();
     }
-
-
 }

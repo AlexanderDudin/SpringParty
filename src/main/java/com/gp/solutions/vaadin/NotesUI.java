@@ -1,5 +1,6 @@
 package com.gp.solutions.vaadin;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
@@ -9,7 +10,7 @@ import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+@Push
 @SpringUI(path = "vaadin")
 @Theme("mytheme")
 public class NotesUI extends UI implements ViewAccessControl{
